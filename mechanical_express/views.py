@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import redirect, render
-from .models import Usuariodos
+from .models import Usuario
 from django.http.response import HttpResponse
 #region principal
 
@@ -22,7 +22,7 @@ def contactenos(request):
 def insertarusuario(request):
     if request.method=="POST":
         if  request.POST.get("rol") and request.POST.get("nombres") and request.POST.get("apellidos") and request.POST.get("direccion") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña"):
-            usuario = Usuariodos()
+            usuario = Usuario()
             usuario.rol = request.POST.get("rol")
             usuario.nombres = request.POST.get("nombres")
             usuario.apellidos = request.POST.get("apellidos")
@@ -31,38 +31,36 @@ def insertarusuario(request):
             usuario.email = request.POST.get("email")
             usuario.contraseña = request.POST.get("contraseña")
             usuario.save()
-            return redirect("/Login/listado")
+            return redirect("/")
         else:   
             return HttpResponse("Noda")
     else:
         return render(request, 'Login/insertar.html')
     
-def listadousuario(request):
-    usuario = Usuario.objects.all()
-    return render(request, "Login/listado.html", {'usuario': usuario})
+# def listadousuario(request):
+#     usuario = Usuario.objects.all()
+#     return render(request, "Login/listado.html", {'usuario': usuario})
 
-def actualizarusuario(request, idusuario):
-    if request.method=="POST":
-        if request.POST.get("rol") and request.POST.get("nombre") and request.POST.get("apellido") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña") and request.POST.get("edad"):
-            usuario = Usuario.objects.get(id=idusuario)
-            roles = Roles()
-            roles.rol = request.POST.get("rol")
-            usuario.cedula = request.POST.get("cedula")
-            usuario.apellido = request.POST.get("apellido")
-            usuario.telefono = request.POST.get("telefono")
-            usuario.email = request.POST.get("email")
-            usuario.contraseña = request.POST.get("contraseña")
-            usuario.edad = request.POST.get("edad")
-            usuario.save() 
-            return redirect("/usuario/listado")
-    else:
-        usuario = Usuario.objects.filter(id=idusuario)
-        return render(request, 'Login/actualizar.html', {'usuario':usuario})
+# def actualizarusuario(request, idusuario):
+#     if request.method=="POST":
+#         if request.POST.get("rol") and request.POST.get("nombre") and request.POST.get("apellido") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña") and request.POST.get("edad"):
+#             usuario = Usuario.objects.get(id=idusuario)
+#             usuario.cedula = request.POST.get("cedula")
+#             usuario.apellido = request.POST.get("apellido")
+#             usuario.telefono = request.POST.get("telefono")
+#             usuario.email = request.POST.get("email")
+#             usuario.contraseña = request.POST.get("contraseña")
+#             usuario.edad = request.POST.get("edad")
+#             usuario.save() 
+#             return redirect("/usuario/listado")
+#     else:
+#         usuario = Usuario.objects.filter(id=idusuario)
+#         return render(request, 'Login/actualizar.html', {'usuario':usuario})
     
-def borrarusuario(request, idusuario):
-    usuario = Usuario.objects.get(id=idusuario)
-    usuario.delete()
-    return redirect("/Login/listado")
+# def borrarusuario(request, idusuario):
+#     usuario = Usuario.objects.get(id=idusuario)
+#     usuario.delete()
+#     return redirect("/Login/listado")
 
 # def validarusuario():
 

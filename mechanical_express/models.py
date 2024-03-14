@@ -68,18 +68,6 @@ class Taller(models.Model):
         db_table = "taller"  
 
 class Usuario(models.Model):
-    nombres = models.CharField(max_length=150)
-    apellidos = models.CharField(max_length=150)
-    direccion = models.CharField(max_length=150)
-    telefono = models.CharField(max_length=20)
-    email = models.CharField(max_length=100)
-    contraseña = models.CharField(max_length=120)
-    fecha_creacion = models.CharField(max_length=250)
-    rol_ida = models.CharField(max_length=11)
-    class Meta:
-        db_table = "usuario"   
-
-class Usuariodos(models.Model):
     rol = models.CharField(max_length=30)
     nombres = models.CharField(max_length=150)
     apellidos = models.CharField(max_length=150)
@@ -88,7 +76,7 @@ class Usuariodos(models.Model):
     email = models.CharField(max_length=100)
     contraseña = models.CharField(max_length=120)
     class Meta:
-        db_table = "usuariodos"   
+        db_table = "usuario"   
 
 class Usuario_taller(models.Model):
     usuario_ida = models.CharField(max_length=11)
