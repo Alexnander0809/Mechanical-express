@@ -1,7 +1,7 @@
 from django import forms
 from django.shortcuts import redirect, render
-from mechanical_express.models import Roles, Usuario
-
+from .models import Usuariodos
+from django.http.response import HttpResponse
 #region principal
 
 def principal(request):
@@ -21,16 +21,19 @@ def contactenos(request):
 #region usuario
 def insertarusuario(request):
     if request.method=="POST":
-        if request.POST.get("rol_ida") and request.POST.get("nombres") and request.POST.get("apellidos") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña"):
-            usuario = Usuario()
-            usuario.rol_ida = request.POST.get("rol_ida")
+        if  request.POST.get("rol") and request.POST.get("nombres") and request.POST.get("apellidos") and request.POST.get("direccion") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña"):
+            usuario = Usuariodos()
+            usuario.rol = request.POST.get("rol")
             usuario.nombres = request.POST.get("nombres")
             usuario.apellidos = request.POST.get("apellidos")
+            usuario.direccion = request.POST.get("direccion")
             usuario.telefono = request.POST.get("telefono")
             usuario.email = request.POST.get("email")
             usuario.contraseña = request.POST.get("contraseña")
-            usuario.save() 
+            usuario.save()
             return redirect("/Login/listado")
+        else:   
+            return HttpResponse("Noda")
     else:
         return render(request, 'Login/insertar.html')
     
