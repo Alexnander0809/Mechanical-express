@@ -1,7 +1,9 @@
-from django import forms
-from django.shortcuts import redirect, render
+from django.db import connection
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth import login
 from .models import Usuario
-from django.http.response import HttpResponse
+
 #region principal
 
 def principal(request):
@@ -19,23 +21,60 @@ def contactenos(request):
 #endregion
 
 #region usuario
+
+
+def verificarusuario(request):
+    if request.method == 'POST':
+        if request.POST.get("email") and request.POST.get("contraseña"):
+            usuario = Usuario()
+            usuario.email = request.POST.get('email')
+            usuario.contraseña = request.POST.get('contraseña')
+            verificar = connection.cursor()
+            verificar.execute("call verificarusuario('"+usuario.email+"','"+usuario.contraseña+"')")
+            return redirect("/productos/listado")
+        else:
+            return render()
+    else:
+        return render(request, 'login.html')
+
 def insertarusuario(request):
     if request.method=="POST":
-        if  request.POST.get("rol") and request.POST.get("nombres") and request.POST.get("apellidos") and request.POST.get("direccion") and request.POST.get("telefono") and request.POST.get("email") and request.POST.get("contraseña"):
+        rol = request.POST.get("rol")
+        nombres = request.POST.get("nombres")
+        apellidos = request.POST.get("apellidos")
+        direccion = request.POST.get("direccion")
+        telefono = request.POST.get("telefono")
+        email = request.POST.get("email")
+        contraseña = request.POST.get("contraseña")
+
+        print("Valores recibidos:")
+        print("Rol:", rol)
+        print("Nombres:", nombres)
+        print("Apellidos:", apellidos)
+        print("Dirección:", direccion)
+        print("Teléfono:", telefono)
+        print("Email:", email)
+        print("Contraseña:", contraseña)
+
+        if rol and nombres and apellidos and direccion and telefono and email and contraseña:
             usuario = Usuario()
-            usuario.rol = request.POST.get("rol")
-            usuario.nombres = request.POST.get("nombres")
-            usuario.apellidos = request.POST.get("apellidos")
-            usuario.direccion = request.POST.get("direccion")
-            usuario.telefono = request.POST.get("telefono")
-            usuario.email = request.POST.get("email")
-            usuario.contraseña = request.POST.get("contraseña")
+            usuario.rol = rol
+            usuario.nombres = nombres
+            usuario.apellidos = apellidos
+            usuario.direccion = direccion
+            usuario.telefono = telefono
+            usuario.email = email
+            usuario.contraseña = contraseña
             usuario.save()
+            print("Usuario guardado exitosamente")
             return redirect("/")
         else:   
-            return HttpResponse("Noda")
+            mensaje = "Algunos campos requeridos no están presentes en el formulario."
+            print(mensaje)
+            return render(request, 'Login/insertar.html', {'mensaje': mensaje})
     else:
         return render(request, 'Login/insertar.html')
+
     
 # def listadousuario(request):
 #     usuario = Usuario.objects.all()
@@ -62,12 +101,5 @@ def insertarusuario(request):
 #     usuario.delete()
 #     return redirect("/Login/listado")
 
-# def validarusuario():
-
-def validarcorreo(self):
-    email = self.cleaned_data.get('email')
-    if Usuario.objects.filter(email=email).exists():
-        raise forms.ValidationError(u'El email ya está registrado, prueba con otro')
-    return email
 
 #endregion
