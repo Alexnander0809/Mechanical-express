@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mechanical_express.views import principal, solicitar_servicio, reserva, contactenos, insertarusuario
+from mechanical_express.views import principal, solicitar_servicio, reserva, contactenos, insertarusuario, verificarusuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,5 @@ urlpatterns = [
     path('Home/solicitar_servicio', solicitar_servicio),
     path('Home/reserva', reserva),
     path('Home/contactenos', contactenos),
-    path('Login/insertar', insertarusuario)
+    path('Login/insertar', insertarusuario, name="view1"),
 ]

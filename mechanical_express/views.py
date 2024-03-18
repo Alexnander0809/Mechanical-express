@@ -37,39 +37,60 @@ def verificarusuario(request):
     else:
         return render(request, 'login.html')
 
+
+
 def insertarusuario(request):
     if request.method=="POST":
-        rol = request.POST.get("rol")
-        nombres = request.POST.get("nombres")
-        apellidos = request.POST.get("apellidos")
-        direccion = request.POST.get("direccion")
-        telefono = request.POST.get("telefono")
-        email = request.POST.get("email")
-        contraseña = request.POST.get("contraseña")
+        if 'form1' in request.POST:
+            rol = request.POST.get("rol")
+            nombres = request.POST.get("nombres")
+            apellidos = request.POST.get("apellidos")
+            direccion = request.POST.get("direccion")
+            telefono = request.POST.get("telefono")
+            email = request.POST.get("email")
+            contraseña = request.POST.get("contraseña")
 
-        print("Valores recibidos:")
-        print("Rol:", rol)
-        print("Nombres:", nombres)
-        print("Apellidos:", apellidos)
-        print("Dirección:", direccion)
-        print("Teléfono:", telefono)
-        print("Email:", email)
-        print("Contraseña:", contraseña)
+            print("Valores recibidos:")
+            print("Rol:", rol)
+            print("Nombres:", nombres)
+            print("Apellidos:", apellidos)
+            print("Dirección:", direccion)
+            print("Teléfono:", telefono)
+            print("Email:", email)
+            print("Contraseña:", contraseña)
 
-        if rol and nombres and apellidos and direccion and telefono and email and contraseña:
-            usuario = Usuario()
-            usuario.rol = rol
-            usuario.nombres = nombres
-            usuario.apellidos = apellidos
-            usuario.direccion = direccion
-            usuario.telefono = telefono
-            usuario.email = email
-            usuario.contraseña = contraseña
-            usuario.save()
-            print("Usuario guardado exitosamente")
-            return redirect("/")
-        else:   
-            mensaje = "Algunos campos requeridos no están presentes en el formulario."
+            if rol and nombres and apellidos and direccion and telefono and email and contraseña:
+                usuario = Usuario()
+                usuario.rol = rol
+                usuario.nombres = nombres
+                usuario.apellidos = apellidos
+                usuario.direccion = direccion
+                usuario.telefono = telefono
+                usuario.email = email
+                usuario.contraseña = contraseña
+                usuario.save()
+                print("Usuario guardado exitosamente")
+                return redirect("/")
+            else:   
+                mensaje = "Algunos campos requeridos no están presentes en el formulario."
+                print(mensaje)
+                return render(request, 'Login/insertar.html', {'mensaje': mensaje})
+        elif 'form2' in request.POST:
+            if request.POST.get("email") and request.POST.get("contraseña"):
+                name = request.POST.get("email")
+                pasdfs = request.POST.get("contraseña")
+                print(name + " " + pasdfs)
+                user = Usuario.objects.filter(email=name)
+                if user.exists():
+                    mensaje = "bien"
+                    print(mensaje)
+                    return render(request, 'Login/insertar.html', {'mensaje': mensaje})
+            else: 
+                mensaje = "Algunos campos requeridos no están presentes en el formulario."
+                print(mensaje)
+                return render(request, 'Login/insertar.html', {'mensaje': mensaje})
+        else: 
+            mensaje = "No has hecho nada"
             print(mensaje)
             return render(request, 'Login/insertar.html', {'mensaje': mensaje})
     else:
