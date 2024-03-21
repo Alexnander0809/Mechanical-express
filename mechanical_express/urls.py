@@ -24,5 +24,5 @@ urlpatterns = [
     path('Home/solicitar_servicio', solicitar_servicio),
     path('Home/reserva', reserva),
     path('Home/contactenos', contactenos),
-    path('Login/login', insertarusuario)
+    path('Login/insertar', insertarusuario)
 ]
