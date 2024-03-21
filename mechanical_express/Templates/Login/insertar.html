@@ -2,65 +2,63 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static 'css/login.css' %}">
-        <title>Document</title>
-    </head>
-    <body>
-        <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <h1>Crear Cuenta</h1>
-                    <br>
-                    <select name="rol" placeholder="rol">
-                        <option value="domiciliario">Domiciliario</option>
-                        <option value="usuario">Usuario</option>
-                        <option value="taller">Taller</option>
-                    </select>
-                    <input type="text" name="nombre" placeholder="Nombre">
-                    <input type="text" name="apellido" placeholder="apellido">
-                    <input type="text" name="telefono" placeholder="Telefono">
-                    <input type="text" name="email" placeholder="Email">
-                    <input type="password" name="contrasena" placeholder="Contraseña">
-                    <input type="text" name="edad" placeholder="Edad">
-                    <button>Registrarse</button>
-                </form>
-            </div>
-            <div class="form-container sign-in-container">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <h1>Login</h1>
-                    <br>
-                    <select name="rol" placeholder="rol">
-                        <option value="Administrador">Administrador</option>
-                        <option value="domiciliario">Domiciliario</option>
-                        <option value="usuario">Usuario</option>
-                        <option value="taller">Taller</option>
-                    </select><br>
-                    <input type="email" name="email" placeholder="Email">
-                    <input type="password" name="contrasena" placeholder="Contraseña">
-                    <a href="#">Olvidaste tu contraseña?</a>
-                    <button>Entrar</button>
-                </form>
-            </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>¡Bienvenido de nuevo!</h1>
-                        <p>Para mantenerse conectado con nosotros, inicie sesión con su información personal</p>
-                        <button class="ghost" id="signIn">Logearse</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Hola</h1>
-                        <p>Introduce tus datos personales y comienza tu viaje con nosotros.</p>
-                        <button class="ghost" id="signUp">Registrarse</button>
-                    </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" href="{% static 'img/logo.png'%}" type="img/x-icon">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form method="post">
+                {% csrf_token %}
+                <h1>Ingresar</h1>
+                <input type="email" name="email" placeholder="email">
+                <input type="password" name="contraseña" placeholder="contraseña">
+                <a href="#">Olvidaste tu contraseña?</a>
+                <button type="submit" name="form2">Ingresar</button>
+            </form>
+        </div>
+        <div class="form-container sign-up">
+            <form method="post">
+                {% csrf_token %}
+                <h1>Crear Cuenta</h1>
+                <select name="rol">
+                    <option value="usuario">usuario</option>
+                    <option value="mecanico">mecanico</option>
+                    <option value="taller">taller</option>
+                </select>
+                <input type="text" name="nombres" placeholder="nombres">
+                <input type="text" name="apellidos" placeholder="apellidos">
+                <input type="text" name="direccion" placeholder="direccion">
+                <input type="number" name="telefono" placeholder="telefono">
+                <input type="email" name="email" placeholder="email">
+                <input type="password" name="contraseña" placeholder="contraseña">
+                <button type="submit" name="form1">Registrar</button>
+            </form>
+        </div>
+        
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Hola! Ya tienes cuenta?</h1>
+                    <p>Ingresa Aqui</p>
+                    <button class="hidden" id="login">Ingresar</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Eres nuevo? registrate aqui</h1>
+                    <p>Registra sus datos personales para utilizar todas las funciones del sitio</p>
+                    <button class="hidden" id="register">Registrar</button>
                 </div>
             </div>
         </div>
-        <script src="views/js/login.js"></script>
-    </body>
+    </div>
+    <script src="{% static 'js/login.js'%}"></script>
+</body>
+
 </html>

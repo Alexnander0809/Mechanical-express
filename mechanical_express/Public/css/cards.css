@@ -88,7 +88,7 @@
 .card .contact a {
     text-decoration: none;
     color: #fff;
-    background: #01b3a7;
+    background: #162e44;
     padding: 5px 20px;
     border-radius: 5px;
     transition: .3s;
@@ -96,7 +96,7 @@
 
 .card .contact a:hover {
     
-    background: #015e57;
+    background: #162e44;
    
 }
 
